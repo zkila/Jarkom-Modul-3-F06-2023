@@ -1247,7 +1247,7 @@ pm = dynamic
 pm.max_children = 10
 pm.start_servers = 5
 pm.min_spare_servers = 1
-pm.max_spare_servers = 2 
+pm.max_spare_servers = 5
 pm.process_idle_timeout = 10s
 ```
 
@@ -1258,7 +1258,7 @@ pm = dynamic
 pm.max_children = 100
 pm.start_servers = 50
 pm.min_spare_servers = 10
-pm.max_spare_servers = 40 
+pm.max_spare_servers = 50 
 pm.process_idle_timeout = 10s
 ```
 
@@ -1273,11 +1273,13 @@ Untuk menyelesaikan soal ini, tinggal menambahkan `least_conn;` di konfigurasi l
 
 Berikut adalah hasil testing sebelum digunakan Least Connection:
 
+![Alt text](nomer19c.png)
+
+Berikut adalah hasil testing setelah digunakan Least Connection:
+
 ![Alt text](nomer20a.png)
 
-berikut adalah hasil testing setelah digunakan Least Connection:
 
-![Alt text](nomer20b.png)
 
 
 

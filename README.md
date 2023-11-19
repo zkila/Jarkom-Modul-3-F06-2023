@@ -1279,7 +1279,9 @@ Berikut adalah hasil testing setelah digunakan Least Connection:
 
 ![Alt text](nomer20a.png)
 
-
+## Kendala
+- Azhar tidak ada kontribusi mengerjakan sama sekali.
+- Azhar tidak ikut demo rekaman video.
 
 
 

@@ -1049,9 +1049,9 @@ Setelah itu, untuk melakukan testing dengan ab, bisa digunakan beberapa command 
 
 ```shell
 # 15ab.sh
-ab -n 100 -c 10 -p ~/postreg.json -T application/json http://riegel.canyon.f06.com:8001/api/auth/register/
+ab -n 100 -c 10 -p ~/postreg.json -T application/json http://canyon.f06.com:81/api/auth/register/
 # 16ab.sh
-ab -n 100 -c 10 -p ~/postreg.json -T application/json http://riegel.canyon.f06.com:8001/api/auth/login/
+ab -n 100 -c 10 -p ~/postreg.json -T application/json http://canyon.f06.com:81/api/auth/login/
 # 17ab.sh
 ab -n 100 -c 10 -H "Authorization: Bearer (token here)" -r -k "http://canyon.f06.com:81/api/me"
 ```
@@ -1231,9 +1231,36 @@ chmod -R 777 storage
 
 Berikut adalah hasil testing menggunakan command ab `ab -n 100 -c 10 -g out.data http://canyon.f06.com:81/`:
 
+```
+pm = dynamic
+pm.max_children = 75
+pm.start_servers = 10
+pm.min_spare_servers = 5
+pm.max_spare_servers = 20
+pm.process_idle_timeout = 10s
+```
+
 ![Alt text](nomer19a.png)
 
+```
+pm = dynamic
+pm.max_children = 10
+pm.start_servers = 5
+pm.min_spare_servers = 1
+pm.max_spare_servers = 2 
+pm.process_idle_timeout = 10s
+```
+
 ![Alt text](nomer19b.png)
+
+```
+pm = dynamic
+pm.max_children = 100
+pm.start_servers = 50
+pm.min_spare_servers = 10
+pm.max_spare_servers = 40 
+pm.process_idle_timeout = 10s
+```
 
 ![Alt text](nomer19c.png)
 

@@ -338,6 +338,7 @@ Untuk melakukan tes DHCP sudah bekerja atau belum, yang dilakukan adalah stop da
 Berikut adalah contoh gambarnya:  
   
 ![Alt text](nomer1c.png)
+![Alt text](nomer1d.png)
 
 ## Soal 6
 Pada masing-masing worker PHP, lakukan konfigurasi virtual host untuk website [berikut](https://drive.google.com/file/d/1ViSkRq7SmwZgdK64eRbr5Fm1EGCTPrU1/view?usp=sharing) dengan menggunakan php 7.3.  

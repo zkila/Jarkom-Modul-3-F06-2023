@@ -614,6 +614,8 @@ Lalu bisa di tes di client menggunakan command lynx berikut:
 
 ![Alt text](nomer10b.png)
 
+![Alt text](nomer10c.png)
+
 Setelah terkonfirmasi bahwa granz membutuhkan password, langsung saja tes dengan ab dengan command berikut:
 ```shell
 ab -A netics:ajkf06 -n 1000 -c 100 -g out.data http://192.224.2.2/
@@ -622,9 +624,10 @@ ab -n 1000 -c 100 -g out.data http://192.224.2.2/
 
 Didapatkan hasil sebagai berikut:
 
-![Alt text](nomer10c.png)
-
 ![Alt text](nomer10d.png)
+
+![Alt text](nomer10e.png)
+Bisa dilihat bahwa ab yang tidak menggunakan autentikasi, semua requestnya menjadi request Non-2xx karena tidak bisa mengakses konten websitenya dan dihentikan di proses autentikasi.
 
 ## Soal-11
 - [Daftar Isi](#daftar-isi)
@@ -723,11 +726,14 @@ service nginx
 ```
 Penambahannya adalah beberapa `allow` yang menginjinkan client dengan IP tertentu yang ditentukan soal untuk mengakses dan `deny all` yang melarang client dengan IP lain untuk mengakses granz.
 
-Untuk melakukan tes, salah satu client bisa diubah untuk memiliki IP yangn diijinkan untuk mengakses dengan mengganti `network configuration` di `GNS3`.
+Untuk melakukan tes, salah satu client bisa diubah untuk memiliki IP yang diijinkan untuk mengakses dengan mengganti `network configuration` di `GNS3`.
 
 ![Alt text](nomer12a.png)
 
-Berikut adalah hasilnya saat mencoba ngelynx:
+Berikut adalah hasilnya saat mencoba menggunakan lynx dengan command berikut:
+```shell
+lynx 192.224.2.2
+```
 
 - Gagal:
 
@@ -736,6 +742,50 @@ Berikut adalah hasilnya saat mencoba ngelynx:
 - Sukses: 
 
 ![Alt text](nomer12c.png)
+
+## Intro Laravel
+Karena para petualang kehabisan uang, mereka kembali bekerja untuk mengatur riegel.canyon.yyy.com.
+## Soal-13
+- [Daftar Isi](#daftar-isi)
+
+Semua data yang diperlukan, diatur pada Denken dan harus dapat diakses oleh Frieren, Flamme, dan Fern.
+
+## Soal-14
+- [Daftar Isi](#daftar-isi)
+
+Frieren, Flamme, dan Fern memiliki Riegel Channel sesuai dengan quest guide berikut. Jangan lupa melakukan instalasi PHP8.0 dan Composer.
+
+## Soal-15-17
+- [Daftar Isi](#daftar-isi)
+
+Riegel Channel memiliki beberapa endpoint yang harus ditesting sebanyak 100 request dengan 10 request/second. Tambahkan response dan hasil testing pada grimoire.
+
+- POST /auth/register 
+- POST /auth/login 
+- GET /me 
+
+
+
+## Soal-18
+- [Daftar Isi](#daftar-isi)
+
+Untuk memastikan ketiganya bekerja sama secara adil untuk mengatur Riegel Channel maka implementasikan Proxy Bind pada Eisen untuk mengaitkan IP dari Frieren, Flamme, dan Fern. 
+
+## Soal-19
+- [Daftar Isi](#daftar-isi)
+
+Untuk meningkatkan performa dari Worker, coba implementasikan PHP-FPM pada Frieren, Flamme, dan Fern. Untuk testing kinerja naikkan 
+- pm.max_children
+- pm.start_servers
+- pm.min_spare_servers
+- pm.max_spare_servers
+
+sebanyak tiga percobaan dan lakukan testing sebanyak 100 request dengan 10 request/second kemudian berikan hasil analisisnya pada Grimoire.
+
+## Soal-20
+- [Daftar Isi](#daftar-isi)
+
+Nampaknya hanya menggunakan PHP-FPM tidak cukup untuk meningkatkan performa dari worker maka implementasikan Least-Conn pada Eisen. Untuk testing kinerja dari worker tersebut dilakukan sebanyak 100 request dengan 10 request/second. 
 
 
 

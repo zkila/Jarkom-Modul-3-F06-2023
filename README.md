@@ -36,7 +36,7 @@ Kelompok F06:
  
 ### Topologi
 
-![Alt text](topolog3.png)
+![Alt text](images/topolog3.png)
 
 ### Konfig
 

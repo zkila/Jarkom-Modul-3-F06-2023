@@ -16,6 +16,9 @@ Kelompok F06:
 - [No.7 - Weighted Round Robin](#soal-7)
 - [No.8 - Algoritma Load Balancer Lain](#soal-8)
 - [No.9 - Jumlah Worker](#soal-9)
+- [No.10 - Autentikasi](#soal-10)
+- [No.11 - Proxy Pass](#soal-11)
+- [No.12 - IP Akses](#soal-12)
 
  
 ### Topologi
@@ -561,11 +564,183 @@ ab -n 100 -c 10 -g out.data http://granz.channel.f06.com/
 ```
 ![Alt text](nomer9a.png)
 
-![Alt text](nomer9a.png)
+![Alt text](nomer9b.png)
 
-![Alt text](nomer9a.png)
+![Alt text](nomer9c.png)
 
 ## Soal-10
+- [Daftar Isi](#daftar-isi)
+
+Selanjutnya coba tambahkan konfigurasi autentikasi di LB dengan dengan kombinasi username: “netics” dan password: “ajkyyy”, dengan yyy merupakan kode kelompok. Terakhir simpan file “htpasswd” nya di /etc/nginx/rahasisakita/.
+
+Untuk menyelesaikan soal ini, diperlukan untuk membuat file passwd dengan command `htpasswd`. Selain itu juga diperlukan untuk mengubah file virtual host untuk membutuhkan autentikasi untuk diakses. Semua itu bisa dilakukan dengan skrip berikut:
+
+```shell
+htpasswd -c /etc/nginx/rahasisakita netics
+
+echo '
+upstream myweb  {
+	server 192.224.3.1 weight=4; 
+	server 192.224.3.2 weight=2; 
+    server 192.224.3.3 weight=1; 
+}
+
+server {
+	listen 80;
+	server_name granz.channel.f06.com;
+
+        location / {
+        auth_basic "Restricted Access";
+        auth_basic_user_file /etc/nginx/rahasisakita;
+        proxy_pass http://myweb;
+        }
+
+        location ~ /\.ht {
+            deny all;
+        }
+error_log /var/log/nginx/lb_error.log;
+access_log /var/log/nginx/lb_access.log;
+}' > /etc/nginx/sites-available/lb-eisen
+
+service nginx restart
+```
+
+Saat diprompt untuk membuat password, langsung saja masukkan `ajkf06`.
+
+![Alt text](nomer10a.png)
+
+Lalu bisa di tes di client menggunakan command lynx berikut:
+```lynx 192.224.2.2```
+
+![Alt text](nomer10b.png)
+
+Setelah terkonfirmasi bahwa granz membutuhkan password, langsung saja tes dengan ab dengan command berikut:
+```shell
+ab -A netics:ajkf06 -n 1000 -c 100 -g out.data http://192.224.2.2/
+ab -n 1000 -c 100 -g out.data http://192.224.2.2/
+```
+
+Didapatkan hasil sebagai berikut:
+
+![Alt text](nomer10c.png)
+
+![Alt text](nomer10d.png)
+
+## Soal-11
+- [Daftar Isi](#daftar-isi)
+
+Lalu buat untuk setiap request yang mengandung /its akan di proxy passing menuju halaman https://www.its.ac.id. Hint: (proxy_pass).
+
+Untuk menyelesaikan soal ini, langsung saja gunakan skrip ini untuk mengubah konfigurasi load balancer di Eisen.
+```shell
+echo '# Default menggunakan Round Robin
+upstream myweb  {
+	server 192.224.3.1 weight=4; 
+	server 192.224.3.2 weight=2; 
+    server 192.224.3.3 weight=1; 
+}
+
+server {
+	listen 80;
+	server_name granz.channel.f06.com;
+
+        location / {
+        auth_basic "Restricted Access";
+        auth_basic_user_file /etc/nginx/rahasisakita;
+        proxy_pass http://myweb;
+        }
+
+        location ~ /\.ht {
+            deny all;
+        }
+
+        location /its {
+        proxy_pass https://www.its.ac.id;
+        }
+
+error_log /var/log/nginx/lb_error.log;
+access_log /var/log/nginx/lb_access.log;
+}' > /etc/nginx/sites-available/lb-eisen
+
+service nginx restart
+```
+
+Yang ditambahkan adalah `location` block baru yang melihat apakah ada requests dengan tambahan `/its`dan jika ada, maka akan diredirect dengan `proxy_pass` ke https://www.its.ac.id.
+
+Berikut adalah command lynx yang digunakan untuk mengetes dan hasilnya:
+```shell
+lynx 192.224.2.2/its
+```
+
+
+![Alt text](nomer11a.png)
+
+![Alt text](nomer11b.png)
+
+## Soal-12
+- [Daftar Isi](#daftar-isi)
+
+Selanjutnya LB ini hanya boleh diakses oleh client dengan IP [Prefix IP].3.69, [Prefix IP].3.70, [Prefix IP].4.167, dan [Prefix IP].4.168.  Hint: (fixed in dulu clinetnya).
+
+Untuk menyelesaikan soal ini, yang perlu diubah hanyalah konfigurasi load balancer di Eisen, yang bisa dilakukan dengan skrip berikut:
+
+```shell
+echo '
+upstream myweb  {
+	server 192.224.3.1 weight=4; 
+	server 192.224.3.2 weight=2; 
+        server 192.224.3.3 weight=1; 
+}
+
+server {
+	listen 80;
+	server_name granz.channel.f06.com;
+
+        location / {
+        auth_basic "Restricted Access";
+        auth_basic_user_file /etc/nginx/rahasisakita;
+        proxy_pass http://myweb;
+        allow 192.224.3.69;
+        allow 192.224.3.70;
+        allow 192.224.4.167;
+        allow 192.224.4.168;
+        deny all;
+        }
+
+        location ~ /\.ht {
+        deny all;
+        }
+
+        location /its {
+        proxy_pass https://www.its.ac.id;
+        }
+
+error_log /var/log/nginx/lb_error.log;
+access_log /var/log/nginx/lb_access.log;
+}' > /etc/nginx/sites-available/lb-eisen
+
+service nginx
+```
+Penambahannya adalah beberapa `allow` yang menginjinkan client dengan IP tertentu yang ditentukan soal untuk mengakses dan `deny all` yang melarang client dengan IP lain untuk mengakses granz.
+
+Untuk melakukan tes, salah satu client bisa diubah untuk memiliki IP yangn diijinkan untuk mengakses dengan mengganti `network configuration` di `GNS3`.
+
+![Alt text](nomer12a.png)
+
+Berikut adalah hasilnya saat mencoba ngelynx:
+
+- Gagal:
+
+![Alt text](nomer12b.png)
+
+- Sukses: 
+
+![Alt text](nomer12c.png)
+
+
+
+
+
 
 
 

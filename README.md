@@ -6,20 +6,17 @@ Kelompok F06:
 
 ## Daftar Isi
 
-- [Laporan Resmi](#laporan-resmi)
-  - [Daftar Isi](#daftar-isi)
-  - [Topologi](#topologi)
-  - [Konfig Node](#konfig)
-- [No.0 - Konfigurasi DNS](#Soal-0)
-- [No.1-5 - Konfigurasi DHCP](#Soal-1-5)
-- [No. 2 - DNS](#Soal-2)
-- [No. 3 - DNS](#Soal-3)
-- [No. 4 - DNS](#Soal-4)
-- [No. 5 - DNS](#Soal-5)
-- [No. 6 - DNS](#Soal-6)
-- [No. 7 - DNS](#Soal-7)
-- [No. 8 - DNS](#Soal-8)
-- [No. 9 & 10 - Webserver](#Soal-9-10)
+
+- [Daftar Isi](#daftar-isi)
+- [Topologi](#topologi)
+- [Konfig Node](#konfig)
+- [No.0 - DNS](#soal-0)
+- [No.1-5 - DHCP](#soal-1-5)
+- [No.6 - PHP Worker](#soal-6)
+- [No.7 - Weighted Round Robin](#soal-7)
+- [No.8 - Algoritma Load Balancer Lain](#soal-8)
+- [No.9 - Jumlah Worker](#soal-9)
+
  
 ### Topologi
 
@@ -27,7 +24,7 @@ Kelompok F06:
 
 ### Konfig
 
-- Aura (Router)
+- Aura (Router / DHCP Relay)
 ```
 auto eth0
 iface eth0 inet dhcp
@@ -53,7 +50,7 @@ iface eth4 inet static
 	netmask 255.255.255.0
 ```
 - Switch 1
-  - Himmel
+  - Himmel (DHCP Server)
     ```
     auto eth0
     iface eth0 inet static
@@ -61,7 +58,7 @@ iface eth4 inet static
     	netmask 255.255.255.0
     	gateway 192.224.1.0
     ```
-  - Heiter
+  - Heiter (DNS Server)
     ```
     auto eth0
     iface eth0 inet static
@@ -70,7 +67,7 @@ iface eth4 inet static
     	gateway 192.224.1.0
     ```
 - Switch 2
-  - Denken
+  - Denken (Database Server)
     ```
     auto eth0
     iface eth0 inet static
@@ -78,7 +75,7 @@ iface eth4 inet static
     	netmask 255.255.255.0
     	gateway 192.224.2.0
     ```
-  - Eisen
+  - Eisen (Load Balancer)
     ```
     auto eth0
     iface eth0 inet static
@@ -87,7 +84,7 @@ iface eth4 inet static
     	gateway 192.224.2.0
     ```
 - Switch 3
-  - Lawine
+  - Lawine (Worker PHP 1)
     ```
     auto eth0
     iface eth0 inet static
@@ -95,7 +92,7 @@ iface eth4 inet static
     	netmask 255.255.255.0
     	gateway 192.224.3.0
     ```
-  - Linie
+  - Linie (Worker PHP 2)
     ```
     auto eth0
     iface eth0 inet static
@@ -103,7 +100,7 @@ iface eth4 inet static
     	netmask 255.255.255.0
     	gateway 192.224.3.0
     ```
-  - Luger
+  - Luger (Worker PHP 3)
     ```
     auto eth0
     iface eth0 inet static
@@ -111,18 +108,18 @@ iface eth4 inet static
     	netmask 255.255.255.0
     	gateway 192.224.3.0
     ```
-  - Revolte
+  - Revolte (Client)
     ```
     auto eth0
     iface eth0 inet dhcp
     ```
-  - Reichter
+  - Reichter (Client)
     ```
     auto eth0
     iface eth0 inet dhcp
     ```
 - Switch 4
-  - Frieren
+  - Frieren (Worker Laravel 1)
     ```
     auto eth0
     iface eth0 inet static
@@ -130,7 +127,7 @@ iface eth4 inet static
     	netmask 255.255.255.0
     	gateway 192.224.4.0
     ```
-  - Flamme
+  - Flamme (Worker Laravel 2)
     ```
     auto eth0
     iface eth0 inet static
@@ -138,7 +135,7 @@ iface eth4 inet static
     	netmask 255.255.255.0
     	gateway 192.224.4.0
     ```
-  - Fern
+  - Fern (Worker Laravel 3)
     ```
     auto eth0
     iface eth0 inet static
@@ -146,17 +143,19 @@ iface eth4 inet static
     	netmask 255.255.255.0
     	gateway 192.224.4.0
     ```
-  - Sein
+  - Sein (Client)
     ```
     auto eth0
     iface eth0 inet dhcp
     ```
-  - Stark
+  - Stark (Client)
     ```
     auto eth0
     iface eth0 inet dhcp
     ```
 ## Soal-0
+- [Daftar Isi](#daftar-isi)
+
 Setelah mengalahkan Demon King, perjalanan berlanjut. Kali ini, kalian diminta untuk melakukan register domain berupa `riegel.canyon.yyy.com` untuk worker Laravel dan `granz.channel.yyy.com` untuk worker PHP mengarah pada worker yang memiliki IP [prefix IP].x.1.  
 
 Yang diperlukan untuk menyelesaikan soal ini adalah melakukan command `iptables` di Aura sebagai berikut:
@@ -237,7 +236,7 @@ options {
 
 service bind9 restart
 ```
-Untuk domain `riegel.canyon.yyy.com`, riegel dijadikan subdomain dari canyon.yyy.com memisahkan cara mengakses worker Frieren secara langsung dengan mengakses lewat load balancer Eisen dengan default domain tersebut. Dalam konfigurasi DNS ini juga ada forwarder yang mengarah ke IP 192.168.122.1 yang menghubungkan DNS ini ke internet untuk keperluan install dan update pada soal soal selanjutnya.  
+Untuk domain `riegel.canyon.yyy.com`, riegel dijadikan subdomain dari `canyon.yyy.com` memisahkan cara mengakses worker Frieren secara langsung dengan mengakses lewat load balancer Eisen dengan default domain tersebut. Dalam konfigurasi DNS ini juga ada forwarder yang mengarah ke IP `192.168.122.1` yang menghubungkan DNS ini ke internet untuk keperluan install dan update pada soal soal selanjutnya.  
 
 Setelah konfigurasi, DNS server dapata dites dengan skrip berikut di node manapun (kecuali client karena DHCP belum dikonfigurasi).
 ```shell
@@ -250,6 +249,8 @@ Berikut adalah hasil tesnya:
 ![Alt text](nomer0a.png)
 
 ## Soal-1-5
+- [Daftar Isi](#daftar-isi)
+
 Lakukan konfigurasi sesuai dengan peta yang sudah diberikan.  
 
 Kemudian, karena masih banyak spell yang harus dikumpulkan, bantulah para petualang untuk memenuhi kriteria berikut.:  
@@ -306,10 +307,10 @@ INTERFACESv4="eth0"
 
 service isc-dhcp-server restart
 ```
-Di konfigurasi tersebut, subnet 192.224.3.0 diset dengan range 192.224.3.16 - 192.224.3.32 dan range 192.224.3.64 - 192.224.3.80 untuk memenuhi soal nomor 2.
-Untuk subnet 192.224.4.0, diberikan range 192.224.4.12 - 192.224.20 dan range 192.224.4.160 - 192.224.4.168 untuk memenuhi soal nomor 3.  
+Di konfigurasi tersebut, subnet 192.224.3.0 diset dengan `range 192.224.3.16 - 192.224.3.32` dan `range 192.224.3.64 - 192.224.3.80` untuk memenuhi soal nomor 2.
+Untuk subnet 192.224.4.0, diberikan `range 192.224.4.12 - 192.224.20` dan `range 192.224.4.160 - 192.224.4.168` untuk memenuhi soal nomor 3.  
 
-Untuk nomor 4, karena `option domain-name-servers` diset untuk mengarah ke DNS server, yaitu Heiter di IP 192.224.1.2, client (Sein, Stark, Revolte, Reichter) secara otomatis menggunakan DNS server tersebut. Karena DNS server di Heiter sudah dikonfigurasikan dengan forwarder, maka client dapat mengakses web server yang sudah di list di DNS (Riegel dan Granz) dan tersambung ke internet juga melalui IP di forwarder.  
+Untuk nomor 4, karena `option domain-name-servers` diset untuk mengarah ke DNS server, yaitu Heiter di IP `192.224.1.2`, client (Sein, Stark, Revolte, Reichter) secara otomatis menggunakan DNS server tersebut. Karena DNS server di Heiter sudah dikonfigurasikan dengan forwarder, maka client dapat mengakses web server yang sudah di list di DNS (Riegel dan Granz) dan tersambung ke internet juga melalui IP di forwarder.  
 
 Berikut adalah bukti sudah bisa terhubung dengan internet:
 ![Alt text](nomer1a.png)
@@ -327,7 +328,7 @@ service isc-dhcp-relay restart
 ```
 Saat menginstall DHCP relay, akan diprompt untuk konfigurasi IP DHCP server, interface yang akan tersambung, dan modifier lain.  
 - IP yang digunakan untuk DHCP server adalah IP Himmel di `192.224.1.1`.  
-- Interface yang akan tersambung dengan DHCP relay adalah eth1, eth2, eth3 dan eth4 sesuai dengan konfigurasi network di aura untuk menyambungkan semua subnet karena konfigurasi DHCP server di Himmel juga mendaftarkan setiap subnet. Maka dari itu list interface tersebut harus sama dengan konfigurasi relay supaya sistem DHCP ini dapat bekerja.  
+- Interface yang akan tersambung dengan DHCP relay adalah `eth1, eth2, eth3 dan eth4` sesuai dengan konfigurasi network di aura untuk menyambungkan semua subnet karena konfigurasi DHCP server di Himmel juga mendaftarkan setiap subnet. Maka dari itu list interface tersebut harus sama dengan konfigurasi relay supaya sistem DHCP ini dapat bekerja.  
 - Modifier lain bisa dibiarkan kosong.  
   
 Berikut adalah prompt konfigurasinya:
@@ -341,6 +342,8 @@ Berikut adalah contoh gambarnya:
 ![Alt text](nomer1d.png)
 
 ## Soal 6
+- [Daftar Isi](#daftar-isi)
+
 Pada masing-masing worker PHP, lakukan konfigurasi virtual host untuk website [berikut](https://drive.google.com/file/d/1ViSkRq7SmwZgdK64eRbr5Fm1EGCTPrU1/view?usp=sharing) dengan menggunakan php 7.3.  
 
 Yang perlu dilakukan pertama-tama adalah menginstall semua hal yang dibutuhkan untuk deploy website tersebut, bisa menggunakan skrip berikut:
@@ -364,7 +367,9 @@ mkdir /var/www/granz
 mv -v modul-3/* /var/www/granz/
 rm -rf modul-3/
 ```  
-Selain PHP versi 7.3 dan Nginx yang diinstall, beberapa service lain seperti php7.3-fpm, wget, unzip, dan htop yang diperlukan untuk nomor nomor selanjutnya juga sekalian diinstall di skrip tersebut. Service wget dan unzip digunakan untuk mendownload file yang diperlukan untuk websitenya seperti index.php dan lain lain, dan setelah di download, file .zip tersebut diunzip dengan unzip dan dipindahkan ke folder /var/www/granz.  
+Selain PHP versi 7.3 dan Nginx yang diinstall, beberapa service lain seperti php7.3-fpm, wget, unzip, dan htop yang diperlukan untuk nomor nomor selanjutnya juga sekalian diinstall di skrip tersebut. 
+
+Service wget dan unzip digunakan untuk mendownload file yang diperlukan untuk websitenya seperti index.php dan lain lain, dan setelah di download, file .zip tersebut diunzip dengan unzip dan dipindahkan ke folder `/var/www/granz`.  
   
 Setelah proses install selesai, virtual host untuk website granz bisa dikonfigurasikan dengan skrip berikut:  
 ```shell
@@ -459,18 +464,108 @@ Berikut adalah hasil lynx load balancer dengan worker PHP:
 ![Alt text](nomer6c.png)
 
 ## Soal-7
+- [Daftar Isi](#daftar-isi)
+
 Kepala suku dari Bredt Region memberikan resource server sebagai berikut:
 - Lawine, 4GB, 2vCPU, dan 80 GB SSD.
 - Linie, 2GB, 2vCPU, dan 50 GB SSD.
 - Lugner 1GB, 1vCPU, dan 25 GB SSD.
-aturlah agar Eisen dapat bekerja dengan maksimal, lalu lakukan testing dengan 1000 request dan 100 request/second. 
 
+Aturlah agar Eisen dapat bekerja dengan maksimal, lalu lakukan testing dengan 1000 request dan 100 request/second. 
 
+Untuk melakukan testing pada worker PHP dan load balancer di Eisen, konfigurasi load balancer perlu ditambahkan weight terlebih dahulu seperti pada konfigurasi berikut:
+```shell
+# Config 1
+	server 192.224.3.1 weight=4; 
+	server 192.224.3.2 weight=2; 
+  server 192.224.3.3 weight=1;
+# Config 2
+	server 192.224.3.1 weight=80; 
+	server 192.224.3.2 weight=50; 
+  server 192.224.3.3 weight=25;
+# Config 3
+	server 192.224.3.1 weight=2; 
+	server 192.224.3.2 weight=2; 
+  server 192.224.3.3 weight=1;
+```
+Algoritma yang digunakan berubah menjadi weighted round robin karena terdapat parameter weight untuk setiap worker di konfigurasi load balancer di Eisen.
 
+Untuk melakukan testing, bisa menggunakan command berikut:
+```shell
+ab -n 1000 -c 100 -g out.data http://granz.channel.f06.com/
+```
+Berikut adalah hasil testing dengan urutan sesuai dengan config diatas:
 
+![Alt text](nomer7a.png)
 
+![Alt text](nomer7b.png)
 
+![Alt text](nomer7c.png)
 
+## Soal-8
+- [Daftar Isi](#daftar-isi)
+
+Karena diminta untuk menuliskan grimoire, buatlah analisis hasil testing dengan 200 request dan 10 request/second masing-masing algoritma Load Balancer dengan ketentuan sebagai berikut:
+- Nama Algoritma Load Balancer
+- Report hasil testing pada Apache Benchmark
+- Grafik request per second untuk masing masing algoritma. 
+- Analisis 
+
+Untuk menyelesaikan soal ini, yang diganti bukan weight untuk algoritma round robin lagi, tetapi tipe algoritma yang dipakai di load balancer di Eisen.
+
+Berikut adalah algoritma yang akan dipakai untuk testing:
+
+```shell
+# Round Robin
+
+# Least Connection
+least_conn;
+# IP Hash
+ip_hash;
+# Generic Hash
+hash $request_uri consistent;
+```
+Dapat dilihat bahwa round robin tidak memiliki kode, karena algoritma round robin secara default digunakan di konfigurasi Nginx.
+
+Menggunakan command ab berikut, dilakukan testing dengan urutan sesuai dengan konfig diatas:
+
+```shell
+ab -n 200 -c 10 -g out.data http://granz.channel.f06.com/
+```
+
+Berikut adalah hasil ab:
+
+![Alt text](nomer8a.png)
+
+![Alt text](nomer8b.png)
+
+![Alt text](nomer8c.png)
+
+![Alt text](nomer8d.png)
+
+## Soal-9
+- [Daftar Isi](#daftar-isi)
+
+Dengan menggunakan algoritma Round Robin, lakukan testing dengan menggunakan 3 worker, 2 worker, dan 1 worker sebanyak 100 request dengan 10 request/second, kemudian tambahkan grafiknya pada grimoire.
+
+Untuk menyelesaikan soal ini, yang perlu dilakukan adalah mengetes dengan ab jika ada 3 worker yang bekerja, 2 worker yang bekerja dan 1 worker yang bekerja.
+
+Hal ini bisa dilakukan dengan memberhentikan nginx di worker dengan command:
+```shell
+service nginx stop
+```
+
+Berikut adalah command ab yang dipakai dengan hasil ab tersebut:
+```shell
+ab -n 100 -c 10 -g out.data http://granz.channel.f06.com/
+```
+![Alt text](nomer9a.png)
+
+![Alt text](nomer9a.png)
+
+![Alt text](nomer9a.png)
+
+## Soal-10
 
 
 

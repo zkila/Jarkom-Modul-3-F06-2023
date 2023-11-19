@@ -262,7 +262,7 @@ ping granz.channel.f06.com -c 3
 ```
   
 Berikut adalah hasil tesnya: 
-![Alt text](nomer0a.png)
+![Alt text](images/nomer0a.png)
 
 ## Soal-1-5
 - [Daftar Isi](#daftar-isi)
@@ -329,7 +329,7 @@ Untuk subnet 192.224.4.0, diberikan `range 192.224.4.12 - 192.224.20` dan `range
 Untuk nomor 4, karena `option domain-name-servers` diset untuk mengarah ke DNS server, yaitu Heiter di IP `192.224.1.2`, client (Sein, Stark, Revolte, Reichter) secara otomatis menggunakan DNS server tersebut. Karena DNS server di Heiter sudah dikonfigurasikan dengan forwarder, maka client dapat mengakses web server yang sudah di list di DNS (Riegel dan Granz) dan tersambung ke internet juga melalui IP di forwarder.  
 
 Berikut adalah bukti sudah bisa terhubung dengan internet:
-![Alt text](nomer1a.png)
+![Alt text](images/nomer1a.png)
 
 Untuk nomor 5, untuk mengatur lama waktu IP dipinjamkan ke client secara default dan maksimal, dapat melalui `default-lease-time` dan `max-lease-time` yang dikonfigurasikan sesuai dengan permintaan soal. Karena angka yang dimasukkan ke dalam parameter tersebut bersifat detik, maka angka menit harus dikali 60 terlebih dahulu.  
   
@@ -349,13 +349,13 @@ Saat menginstall DHCP relay, akan diprompt untuk konfigurasi IP DHCP server, int
   
 Berikut adalah prompt konfigurasinya:
   
-![Alt text](nomer1b.png)
+![Alt text](images/nomer1b.png)
   
 Untuk melakukan tes DHCP sudah bekerja atau belum, yang dilakukan adalah stop dan start client, lalu membuka web console bagi client tersebut untuk melihat bahwa client sudah dipinjamkan IP sesuai dengan range yang sudah ditentukan. Proses peminjaman ini seharusnya sudah terlihat saat web console dibuka. Apabila tidak terlihat, maka bisa dilihat menggunakan command `ip a`.  
 Berikut adalah contoh gambarnya:  
   
-![Alt text](nomer1c.png)
-![Alt text](nomer1d.png)
+![Alt text](images/nomer1c.png)
+![Alt text](images/nomer1d.png)
 
 ## Soal 6
 - [Daftar Isi](#daftar-isi)
@@ -473,11 +473,11 @@ nginx -t
 Hal yang pertama dilakukan adalah membuat file konfigurasi di folder /etc/nginx/sites-available bernama lb-eisen. lalu dimasukkan konfigurasi tersebut dengan semua IP worker PHP (Lawine, Linie, dan Luger) menjadi worker. server_name juga diset menjadi granz.channel.f06.com agar saat mengetes menggunakan lynx atau ab, tidak perlu menggunakan IP Eisen.  
 
 Berikut adalah hasil lynx load balancer dengan worker PHP: 
-![Alt text](nomer6a.png)
+![Alt text](images/nomer6a.png)
 
-![Alt text](nomer6b.png)
+![Alt text](images/nomer6b.png)
 
-![Alt text](nomer6c.png)
+![Alt text](images/nomer6c.png)
 
 ## Soal-7
 - [Daftar Isi](#daftar-isi)
@@ -512,11 +512,11 @@ ab -n 1000 -c 100 -g out.data http://granz.channel.f06.com/
 ```
 Berikut adalah hasil testing dengan urutan sesuai dengan config diatas:
 
-![Alt text](nomer7a.png)
+![Alt text](images/nomer7a.png)
 
-![Alt text](nomer7b.png)
+![Alt text](images/nomer7b.png)
 
-![Alt text](nomer7c.png)
+![Alt text](images/nomer7c.png)
 
 ## Soal-8
 - [Daftar Isi](#daftar-isi)
@@ -551,13 +551,13 @@ ab -n 200 -c 10 -g out.data http://granz.channel.f06.com/
 
 Berikut adalah hasil ab:
 
-![Alt text](nomer8a.png)
+![Alt text](images/nomer8a.png)
 
-![Alt text](nomer8b.png)
+![Alt text](images/nomer8b.png)
 
-![Alt text](nomer8c.png)
+![Alt text](images/nomer8c.png)
 
-![Alt text](nomer8d.png)
+![Alt text](images/nomer8d.png)
 
 ## Soal-9
 - [Daftar Isi](#daftar-isi)
@@ -575,11 +575,11 @@ Berikut adalah command ab yang dipakai dengan hasil ab tersebut:
 ```shell
 ab -n 100 -c 10 -g out.data http://granz.channel.f06.com/
 ```
-![Alt text](nomer9a.png)
+![Alt text](images/nomer9a.png)
 
-![Alt text](nomer9b.png)
+![Alt text](images/nomer9b.png)
 
-![Alt text](nomer9c.png)
+![Alt text](images/nomer9c.png)
 
 ## Soal-10
 - [Daftar Isi](#daftar-isi)
@@ -620,14 +620,14 @@ service nginx restart
 
 Saat diprompt untuk membuat password, langsung saja masukkan `ajkf06`.
 
-![Alt text](nomer10a.png)
+![Alt text](images/nomer10a.png)
 
 Lalu bisa di tes di client menggunakan command lynx berikut:
 ```lynx 192.224.2.2```
 
-![Alt text](nomer10b.png)
+![Alt text](images/nomer10b.png)
 
-![Alt text](nomer10c.png)
+![Alt text](images/nomer10c.png)
 
 Setelah terkonfirmasi bahwa granz membutuhkan password, langsung saja tes dengan ab dengan command berikut:
 ```shell
@@ -637,9 +637,9 @@ ab -n 1000 -c 100 -g out.data http://192.224.2.2/
 
 Didapatkan hasil sebagai berikut:
 
-![Alt text](nomer10d.png)
+![Alt text](images/nomer10d.png)
 
-![Alt text](nomer10e.png)
+![Alt text](images/nomer10e.png)
 Bisa dilihat bahwa ab yang tidak menggunakan autentikasi, semua requestnya menjadi request Non-2xx karena tidak bisa mengakses konten websitenya dan dihentikan di proses autentikasi.
 
 ## Soal-11
@@ -689,9 +689,9 @@ lynx 192.224.2.2/its
 ```
 
 
-![Alt text](nomer11a.png)
+![Alt text](images/nomer11a.png)
 
-![Alt text](nomer11b.png)
+![Alt text](images/nomer11b.png)
 
 ## Soal-12
 - [Daftar Isi](#daftar-isi)
@@ -741,7 +741,7 @@ Penambahannya adalah beberapa `allow` yang menginjinkan client dengan IP tertent
 
 Untuk melakukan tes, salah satu client bisa diubah untuk memiliki IP yang diijinkan untuk mengakses dengan mengganti `network configuration` di `GNS3`.
 
-![Alt text](nomer12a.png)
+![Alt text](images/nomer12a.png)
 
 Berikut adalah hasilnya saat mencoba menggunakan lynx dengan command berikut:
 ```shell
@@ -750,11 +750,11 @@ lynx 192.224.2.2
 
 - Gagal:
 
-![Alt text](nomer12b.png)
+![Alt text](images/nomer12b.png)
 
 - Sukses: 
 
-![Alt text](nomer12c.png)
+![Alt text](images/nomer12c.png)
 
 ## Intro Laravel
 Karena para petualang kehabisan uang, mereka kembali bekerja untuk mengatur riegel.canyon.yyy.com.
@@ -799,7 +799,7 @@ FLUSH PRIVILEGES;
 - Ketiga adalah mengetes apakah db tersebut terbuat dengan `SHOW DATABASES;`
 - Hasilnya adalah sebagai berikut:
 
-![Alt text](nomer13a.png)
+![Alt text](images/nomer13a.png)
 - Setelah itu bisa menggunakan `\q` untuk keluar dari console SQL.
 
 Untuk menginstall MariaDB client di semua worker digunakan skrip berikut:
@@ -813,7 +813,7 @@ mariadb --host=192.224.2.1 --port=3306 --user=kelompokf06 --password
 ```
 Dan dapat menggunakan command `SHOW DATABASES;` tadi juga untuk memastikan sudah terhubung.
 
-![Alt text](nomer13b.png)
+![Alt text](images/nomer13b.png)
 
 ## Soal-14
 - [Daftar Isi](#daftar-isi)
@@ -916,9 +916,9 @@ php artisan key:generate
 ```
 Apabila skrip tersebut dijalankan harusnya terlihat seperti berikut:
 
-![Alt text](nomer14a.png)
+![Alt text](images/nomer14a.png)
 
-![Alt text](nomer14b.png)
+![Alt text](images/nomer14b.png)
 
 Setelah melakukan proses install Laravel tersebut, bisa dijalankan skrip berikut untuk menambahkan virtual host dengan port yang diubah sesuai dengan ketentuan soal (Frieren:8001 Flamme:8002 Fern:8003).
 ```shell
@@ -966,9 +966,9 @@ Setelah itu langsung bisa dites menggunakan command lynx berikut di client denga
 ```shell
 lynx riegel.canyon.f06.com:8001
 ```
-![Alt text](nomer14c.png)
+![Alt text](images/nomer14c.png)
 
-![Alt text](nomer14d.png)
+![Alt text](images/nomer14d.png)
 
 ## Soal-15-17
 - [Daftar Isi](#daftar-isi)
@@ -1046,11 +1046,11 @@ curl -X GET "http://canyon.f06.com:81/api/me" -H "Authorization: Bearer (token h
 ```
 Berikut adalah hasil register, login, dan /me:
 
-![Alt text](nomer15a.png)
+![Alt text](images/nomer15a.png)
 
-![Alt text](nomer15b.png)
+![Alt text](images/nomer15b.png)
 
-![Alt text](nomer15c.png)
+![Alt text](images/nomer15c.png)
 
 Setelah itu, untuk melakukan testing dengan ab, bisa digunakan beberapa command ab sebagai berikut:
 
@@ -1075,11 +1075,11 @@ echo '
 
 Berikut adalah hasil dari testing ab yang dilakukan:
 
-![Alt text](nomer15d.png)
+![Alt text](images/nomer15d.png)
 
-![Alt text](nomer15e.png)
+![Alt text](images/nomer15e.png)
 
-![Alt text](nomer15f.png)
+![Alt text](images/nomer15f.png)
 
 
 
@@ -1159,7 +1159,7 @@ lynx canyon.f06.com:81/frieren
 ```
 Dan mendapatkan hasil berikut:
 
-![Alt text](nomer18a.png)
+![Alt text](images/nomer18a.png)
 
 
 ## Soal-19
@@ -1247,7 +1247,7 @@ pm.max_spare_servers = 20
 pm.process_idle_timeout = 10s
 ```
 
-![Alt text](nomer19a.png)
+![Alt text](images/nomer19a.png)
 
 ```
 pm = dynamic
@@ -1258,7 +1258,7 @@ pm.max_spare_servers = 5
 pm.process_idle_timeout = 10s
 ```
 
-![Alt text](nomer19b.png)
+![Alt text](images/nomer19b.png)
 
 ```
 pm = dynamic
@@ -1269,7 +1269,7 @@ pm.max_spare_servers = 50
 pm.process_idle_timeout = 10s
 ```
 
-![Alt text](nomer19c.png)
+![Alt text](images/nomer19c.png)
 
 ## Soal-20
 - [Daftar Isi](#daftar-isi)
@@ -1280,11 +1280,11 @@ Untuk menyelesaikan soal ini, tinggal menambahkan `least_conn;` di konfigurasi l
 
 Berikut adalah hasil testing sebelum digunakan Least Connection:
 
-![Alt text](nomer19c.png)
+![Alt text](images/nomer19c.png)
 
 Berikut adalah hasil testing setelah digunakan Least Connection:
 
-![Alt text](nomer20a.png)
+![Alt text](images/nomer20a.png)
 
 ## Kendala
 - Azhar tidak ada kontribusi mengerjakan sama sekali.

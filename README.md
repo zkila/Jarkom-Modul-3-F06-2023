@@ -23,7 +23,7 @@ Kelompok F06:
  
 ### Topologi
 
-![Alt text](img/topolog3.png)
+![Alt text](topolog3.png)
 
 ### Konfig
 
@@ -247,7 +247,7 @@ ping granz.channel.f06.com -c 3
 ```
   
 Berikut adalah hasil tesnya: 
-![Alt text](img/nomer0a.png)
+![Alt text](nomer0a.png)
 
 ## Soal-1-5
 Lakukan konfigurasi sesuai dengan peta yang sudah diberikan.  
@@ -312,7 +312,7 @@ Untuk subnet 192.224.4.0, diberikan range 192.224.4.12 - 192.224.20 dan range 19
 Untuk nomor 4, karena `option domain-name-servers` diset untuk mengarah ke DNS server, yaitu Heiter di IP 192.224.1.2, client (Sein, Stark, Revolte, Reichter) secara otomatis menggunakan DNS server tersebut. Karena DNS server di Heiter sudah dikonfigurasikan dengan forwarder, maka client dapat mengakses web server yang sudah di list di DNS (Riegel dan Granz) dan tersambung ke internet juga melalui IP di forwarder.  
 
 Berikut adalah bukti sudah bisa terhubung dengan internet:
-![Alt text](img/nomer1a.png)
+![Alt text](nomer1a.png)
 
 Untuk nomor 5, untuk mengatur lama waktu IP dipinjamkan ke client secara default dan maksimal, dapat melalui `default-lease-time` dan `max-lease-time` yang dikonfigurasikan sesuai dengan permintaan soal. Karena angka yang dimasukkan ke dalam parameter tersebut bersifat detik, maka angka menit harus dikali 60 terlebih dahulu.  
   
@@ -332,12 +332,12 @@ Saat menginstall DHCP relay, akan diprompt untuk konfigurasi IP DHCP server, int
   
 Berikut adalah prompt konfigurasinya:
   
-![Alt text](img/nomer1b.png)
+![Alt text](nomer1b.png)
   
 Untuk melakukan tes DHCP sudah bekerja atau belum, yang dilakukan adalah stop dan start client, lalu membuka web console bagi client tersebut untuk melihat bahwa client sudah dipinjamkan IP sesuai dengan range yang sudah ditentukan. Proses peminjaman ini seharusnya sudah terlihat saat web console dibuka. Apabila tidak terlihat, maka bisa dilihat menggunakan command `ip a`.  
 Berikut adalah contoh gambarnya:  
   
-![Alt text](img/nomer1c.png)
+![Alt text](nomer1c.png)
 
 ## Soal 6
 Pada masing-masing worker PHP, lakukan konfigurasi virtual host untuk website [berikut](https://drive.google.com/file/d/1ViSkRq7SmwZgdK64eRbr5Fm1EGCTPrU1/view?usp=sharing) dengan menggunakan php 7.3.  
@@ -451,11 +451,11 @@ nginx -t
 Hal yang pertama dilakukan adalah membuat file konfigurasi di folder /etc/nginx/sites-available bernama lb-eisen. lalu dimasukkan konfigurasi tersebut dengan semua IP worker PHP (Lawine, Linie, dan Luger) menjadi worker. server_name juga diset menjadi granz.channel.f06.com agar saat mengetes menggunakan lynx atau ab, tidak perlu menggunakan IP Eisen.  
 
 Berikut adalah hasil lynx load balancer dengan worker PHP: 
-![Alt text](img/nomer6a.png)
+![Alt text](nomer6a.png)
 
-![Alt text](img/nomer6b.png)
+![Alt text](nomer6b.png)
 
-![Alt text](img/nomer6c.png)
+![Alt text](nomer6c.png)
 
 ## Soal-7
 Kepala suku dari Bredt Region memberikan resource server sebagai berikut:

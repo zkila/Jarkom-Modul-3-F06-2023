@@ -2,7 +2,12 @@
 
 Kelompok F06:
 - Arkana Bilal Imani / 5025211034
-- Azhar Abiyu Rasendriya H. / 5025211177
+- ~~Azhar Abiyu Rasendriya H. / 5025211177~~
+
+## Resource
+
+- [Grimoire](https://docs.google.com/document/d/1cqIqL9wcrqEp37a-ASJLjwVFFkVMJhspBVT8EcWa904/edit?usp=sharing)
+- [GNS3 Project](https://itsacid-my.sharepoint.com/:u:/g/personal/5025211034_student_its_ac_id/ERAXro4f4E5OgVTNV6d5ULABgQTvK-XPtwHNyA_HQeTe7w?e=I3KqbE)
 
 ## Daftar Isi
 
@@ -25,6 +30,8 @@ Kelompok F06:
 - [No.18 - Proxy Bind](#soal-18)
 - [No.19 - PHP-FPM](#soal-19)
 - [No.20 - Least Connection](#soal-20)
+
+- [Kendala](#kendala)
 
  
 ### Topologi

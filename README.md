@@ -2,7 +2,7 @@
 
 Kelompok F06:
 - Arkana Bilal Imani / 5025211034
-- ~~Azhar Abiyu Rasendriya H. / 5025211177~~
+- 
 
 ## Resource
 
@@ -1287,8 +1287,7 @@ Berikut adalah hasil testing setelah digunakan Least Connection:
 ![Alt text](images/nomer20a.png)
 
 ## Kendala
-- Azhar tidak ada kontribusi mengerjakan sama sekali.
-- Azhar tidak ikut demo rekaman video.
+Tidak ada kendala.
 
 
 
